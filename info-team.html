@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Submission 3</title>
+    <meta name="description" content="MyPWA Submission 3" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/materialize.min.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <meta name="theme-color" content="#ffffff" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <!-- Navigasi -->
+      <nav class="grey darken-4" role="navigation">
+        <div class="nav-wrapper container">
+          <a href="#" class="brand-logo" id="logo-container">infobola.com</a>
+          <a href="./index.html" class="sidenav-trigger" data-target="nav-mobile">
+            <i class="material-icons">arrow_back</i>
+          </a>
+
+          <ul class="topnav right hide-on-med-and-down list-bar"></ul>
+          <ul class="sidenav" id="nav-mobile"></ul>
+        </div>
+      </nav>
+      <!-- Akhir Navigasi -->
+    </header>
+    <main>
+      <div class="container" id="body-content"></div>
+      <!-- floating action button -->
+      <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red" id="save">
+        <i class="large material-icons">save</i>
+        </a>
+      </div>
+    </main>
+    <footer class="page-footer black foter">
+        <div class="container">
+          <div class="row">
+            <div class="col l6 s12">
+              <h5 class="white-text">infobola.com</h5>
+              <p class="grey-text text-lighten-4">Update berita terbaru dari League Champions.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+              <h5 class="white-text">Info</h5>
+              <ul>
+                <li><a class="grey-text text-lighten-3" href="#">Hubungi kami</a></li>
+                <li><a class="grey-text text-lighten-3" href="#">Privacy</a></li>
+                <li><a class="grey-text text-lighten-3" href="#">Term</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <div class="container">
+            copyright © 2020 - Tufik Harahap. All rights reserved
+          </div>
+        </div>
+      </footer>
+    
+    <script src="js/materialize.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/idb.js"></script>
+    <script src="js/db.js"></script>
+
+    <script>
+      // // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function() {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function() {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
+      
+      document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const isFromSaved = urlParams.get("saved");
+        const btnSave = document.getElementById("save");
+
+        if (isFromSaved) {
+          // Hide fab jika dimuat dari indexed db
+          btnSave.style.display = 'none';
+          // ambil artikel lalu tampilkan
+          getSavedTeamById();
+        } else {
+          var item = getInfoTeamById();
+        }
+        
+        btnSave.onclick = function() {
+          console.log("Tombol FAB di klik.");
+          item.then(function(team) {
+            saveForLater(team);
+
+            let notifikasi = document.getElementById("notifikasi");
+            notifikasi.innerHTML=`
+              <div class="alert">
+                <span class="closebtn" id="close" onclick="this.parentElement.style.display='none';">&times;</span>  
+                <strong>Success!</strong> Team telah disimpan ke halaman saved.
+              </div>`;
+          });
+        };
+      });
+    </script>
+  </body>
+</html>

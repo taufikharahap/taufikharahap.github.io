@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@499;500&display=swap');
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(221, 221, 213);
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    font-family: 'Quicksand', sans-serif;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+/* style navbar */
+#logo-container{
+    color: #ffffff;
+    text-shadow: 2px 2px 5px black;
+}
+
+.list-bar a:hover{
+    color: #029c02;
+}
+.list-bar a:focus{
+    color: #029c02;
+}
+
+/* style tabel beranda */
+.titel-content {
+    margin-top: 60px;
+    margin-bottom: 12px;
+    margin-left: 12px;
+    font-weight: bold;
+}
+.titel-content span {
+    background-color: rgba(0, 128, 0, 0.486);
+}
+
+.card-klasemen{
+    background-color: #d2d2d2;
+}
+.flex-container-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: left;
+ }
+
+.flex-container-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 50px;
+ }
+
+#titel-group-name {
+    color:black;
+    text-align: center; 
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+.titel-tabel-klasemen {
+    font-weight: 600;
+}
+
+.cell{
+    background: -webkit-linear-gradient(bottom, #d2d2d2, #ddd);
+    padding-top: 12px;
+}
+.cell-info {
+    flex-basis: 10%;
+
+}
+
+.cell-logo {
+    flex-basis: 10%;
+    padding-left: 12px;
+}
+
+.cell-name{
+    flex-basis: 40%;
+}
+
+ /* style detail team */
+ .card-profile {
+    background-color: #d2d2d2;
+    margin-top: 40px;
+ }
+
+#titel-profile {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-top: 0px;
+}
+.cell-profile{
+    background: -webkit-linear-gradient(bottom, #d2d2d2, #ddd);
+    height: 50px;
+    padding-left: 10px;
+    padding-top: 10px;
+    color: black;
+}
+.cell-ket {
+    flex-basis: 25%;
+    word-wrap: break-word;
+    font-weight: 500;
+ }
+
+ .cell-bar {
+    flex-basis: 10%;
+ }
+
+ .cell-det {
+     flex-basis: 65%;
+     word-wrap: break-word;
+ }
+
+ .cell-squad {
+     flex-basis: 50%;
+ }
+
+ .fixed-bg{
+    min-height: 275px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 400px 400px;
+    background-color: rgb(221, 221, 213);
+    background-blend-mode: soft-light;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+#titel-squad {
+    color: black;
+    font-size: 1em;
+    font-weight: 600;
+    margin-top: 35px;
+}
+
+#titel-squad span {
+    background-color: rgba(0, 128, 0, 0.486);
+}
+
+.cell-squad {
+    background: -webkit-linear-gradient(bottom, #d2d2d2, #ddd);
+    height: 50px;
+    padding-left: 10px;
+    padding-top: 10px;
+    color: black;
+}
+ /* loading */
+.preloader {
+    position: fixed;
+    left: 50%;
+    top: 35%;
+    z-index: 9999;
+}
+
+/* style notifikasi tombol save */
+.alert {
+    padding: 20px;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+    margin-bottom: 15px;
+    position: fixed;
+    left: 30%;
+    top: 50%;
+    background-color: #4CAF50;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+
+/* style card di halaman saved */
+.card-saved {
+    background-color: #d2d2d2;
+    margin-top: 40px;
+}
+.card-image {
+    padding-top: 19px;
+}
+
+@media screen and (max-width: 550px) {
+    .cell{
+        height: 62px;
+        font-size: smaller;
+    }
+    .cell-info {
+        flex-basis: 12.5%;
+        text-align: center;
+        padding-right: 5px;
+    
+    }
+    
+    .cell-logo {
+        flex-basis: 12.5%;
+    }
+    
+    .cell-name{
+        flex-basis: 25%;
+        padding-left: 5px;
+    }
+
+    .cell-profile, .cell-squad{
+        height: 50px;
+        font-size: smaller;
+    }
+    .fixed-bg{
+        min-height: 180px;
+        background-size: 200px 200px;
+        
+    }
+    .alert {
+        position: fixed;
+        left: 5%;
+        top: 50%;
+        max-width: 345px;
+    }
+    
+}
