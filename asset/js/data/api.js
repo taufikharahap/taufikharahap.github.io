@@ -53,7 +53,7 @@ function getStandings() {
                 grup.table.forEach(function (tabel) {
                   standing += `
                       <div class="flex-container-row">
-                        <div class="cell cell-logo"><img src="${tabel.team.crestUrl.replace(/^http:\/\//i, 'https://')}" height="40px" width="30px" alt="logo"/></div>
+                        <div class="cell cell-logo"><img src="${tabel.team.crestUrl.replace(/^http:\/\//i, 'https://')}" onerror="this.src='asset/icons/logo-notfound.png'" height="40px" width="30px" alt="logo"/></div>
                         <div class="cell cell-name">${tabel.team.name}</div>
                         <div class="cell cell-info">${tabel.won}</div>
                         <div class="cell cell-info">${tabel.draw}</div>
@@ -107,7 +107,7 @@ function getStandings() {
               grup.table.forEach(function (tabel) {
                 standing += `
                     <div class="flex-container-row">
-                      <div class="cell cell-logo"><img src="${tabel.team.crestUrl.replace(/^http:\/\//i, 'https://')}" height="40px" width="30px" alt="logo"/></div>
+                      <div class="cell cell-logo"><img src="${tabel.team.crestUrl.replace(/^http:\/\//i, 'https://')}" onerror="this.src='asset/icons/logo-notfound.png'" height="40px" width="30px" alt="logo"/></div>
                       <div class="cell cell-name">${tabel.team.name}</div>
                       <div class="cell cell-info">${tabel.won}</div>
                       <div class="cell cell-info">${tabel.draw}</div>
@@ -196,7 +196,7 @@ function getInfoTeamById() {
                         <div class="cell-profile cell-det">${data.venue}</div>
                       </div>
                     </div>
-                    <div class="fixed-bg" style="background-image: url(${data.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="logo");"></div>
+                    <div class="fixed-bg" style="background-image: url(${data.crestUrl.replace(/^http:\/\//i, 'https://')}");"></div>
                     <div class="flex-container-column">
                       <p id="titel-squad"><span>Squad</span> ${data.name}</P>
                       <div class="flex-container-row">
@@ -282,7 +282,7 @@ function getInfoTeamById() {
                         <div class="cell-profile cell-det">${data.venue}</div>
                       </div>
                     </div>
-                    <div class="fixed-bg" style="background-image: url(${data.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="logo");"></div>
+                    <div class="fixed-bg" style="background-image: url(${data.crestUrl.replace(/^http:\/\//i, 'https://')}");"></div>
                     <div class="flex-container-column">
                       <p id="titel-squad"><span>Squad</span> ${data.name}</P>
                       <div class="flex-container-row">
@@ -301,42 +301,52 @@ function getInfoTeamById() {
 }
 
 function getSavedTeams() {
-  getAll().then(function(teams) {
+  getAll()
+  .then(function(teams) {
     console.log(teams);
-    // Menyusun komponen card artikel secara dinamis
-    let infoTeamHTML = "";
-    teams.forEach(function(team) {
-      infoTeamHTML += `
-          <div class="col s12 m4">
-              <div class="card medium card-saved">
-                  <div class="card-image">
-                    <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="logo" height="220px" width="250px">
-                  </div>
-                  <div class="card-content">
-                    <span class="card-title center">${team.name}</span>
-                  </div>
-                  <div class="card-action center">
-                      <a class="waves-effect waves-light btn" href="./info-team.html?id=${team.id}&saved=true">Lihat</a>
-                      <a class="waves-effect waves-light btn removeButton" id="${team.id}">Hapus</a>
-                  </div>
-              </div>
-          </div>
-                `;
-    });
-    // Sisipkan komponen card ke dalam elemen dengan id #saved-teams
-    document.getElementById("saved-teams").innerHTML = infoTeamHTML;
 
-    document.querySelectorAll(".removeButton").forEach(function(button) {
-      button.onclick = function(event) {
-            let teamId = event.target.id;
-            let alert = confirm("Apakah anda yakin mengahapus team ini?");
+    if(teams.length > 0){
+      // Menyusun komponen card artikel secara dinamis
+      let infoTeamHTML = "";
+      teams.forEach(function(team) {
+        infoTeamHTML += `
+            <div class="col s12 m4">
+                <div class="card medium card-saved">
+                    <div class="card-image">
+                      <img src="${team.crestUrl.replace(/^http:\/\//i, 'https://')}" onerror="this.src='asset/icons/logo-notfound.png'" alt="logo" height="220px" width="250px">
+                    </div>
+                    <div class="card-content">
+                      <span class="card-title center">${team.name}</span>
+                    </div>
+                    <div class="card-action center">
+                        <a class="waves-effect waves-light btn" href="./info-team.html?id=${team.id}&saved=true">Lihat</a>
+                        <a class="waves-effect waves-light btn removeButton" id="${team.id}">Hapus</a>
+                    </div>
+                </div>
+            </div>
+                  `;
+      });
+      // Sisipkan komponen card ke dalam elemen dengan id #saved-teams
+      document.getElementById("saved-teams").innerHTML = infoTeamHTML;
 
-            if (alert == true) {
-              deleteForLater(parseInt(teamId));
-              getSavedTeams()
-            }
-      };
-    });
+      //tombol delete team di page saved
+      document.querySelectorAll(".removeButton").forEach(function(button) {
+        button.onclick = function(event) {
+              let teamId = event.target.id;
+              let alert = confirm("Apakah anda yakin mengahapus team ini?");
+
+              if (alert == true) {
+                deleteForLater(parseInt(teamId));
+                getSavedTeams()
+              }
+        };
+      });
+    }else{
+      document.getElementById("saved-teams").innerHTML =`
+          <div id="saved-kosong">
+            <h6>"<span> Your Saved kosong!</span> Save your team di halaman beranda."</h6>
+          </div>`;
+    }
   });
 }
 
@@ -402,7 +412,7 @@ function getSavedTeamById() {
                         <div class="cell-profile cell-det">${data.venue}</div>
                       </div>
                     </div>
-                    <div class="fixed-bg" style="background-image: url(${data.crestUrl.replace(/^http:\/\//i, 'https://')}" alt="logo");"></div>
+                    <div class="fixed-bg" style="background-image: url(${data.crestUrl.replace(/^http:\/\//i, 'https://')}" onerror="this.src='asset/icons/logo-notfound.png'" alt="logo");"></div>
                     <div class="flex-container-column">
                       <p id="titel-squad"><span>Squad</span> ${data.name}</P>
                       <div class="flex-container-row">

@@ -125,7 +125,7 @@ main {
  }
 
  .fixed-bg{
-    min-height: 275px;
+    height: 300px;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -189,7 +189,7 @@ main {
     color: black;
 }
 
-/* style card di halaman saved */
+/* style halaman saved */
 .card-saved {
     background-color: #d2d2d2;
     margin-top: 40px;
@@ -198,7 +198,22 @@ main {
     padding-top: 19px;
 }
 
-@media screen and (max-width: 550px) {
+#saved-kosong{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+#saved-kosong span{
+    background-color: rgba(0, 128, 0, 0.486);
+    font-weight: 800;
+}
+
+
+@media screen and (max-width: 600px) {
+    .titel-content {
+        font-size: smaller;
+    }
     .cell{
         height: 62px;
         font-size: smaller;
@@ -235,4 +250,25 @@ main {
         max-width: 345px;
     }
     
+    .preloader {
+        left: 43%;
+        top: 30%;
+        z-index: 900;
+    }
+
+    #about h2{
+        font-size: 1.5em;
+    }
+
+    footer {
+        font-size: 50%;
+    }
+
+    #saved-kosong{
+        height: 370px;
+        font-size: 50%;
+        text-align: center;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
 }

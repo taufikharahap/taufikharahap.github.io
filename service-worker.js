@@ -13,20 +13,24 @@ workbox.precaching.precacheAndRoute([
     { url: '/index.html', revision: '1' },
     { url: '/nav.html', revision: '1' },
     { url: '/info-team.html', revision: '1' },
-    { url: '/css/materialize.min.css', revision: '1' },
-    { url: '/css/custom.css', revision: '1' },
-    { url: '/js/materialize.min.js', revision: '1' },
-    { url: '/js/nav.js', revision: '1' },
-    { url: '/js/api.js', revision: '1' },
-    { url: '/js/idb.js', revision: '1' },
-    { url: '/js/db.js', revision: '1' },
+    { url: '/asset/css/materialize.min.css', revision: '1' },
+    { url: '/asset/css/custom.css', revision: '1' },
+    { url: '/asset/js/materialize/materialize.min.js', revision: '1' },
+    { url: '/asset/js/view/nav.js', revision: '1' },
+    { url: '/asset/js/data/api.js', revision: '1' },
+    { url: '/asset/js/data/idb.js', revision: '1' },
+    { url: 'asset/js/data/db.js', revision: '1' },
+    { url: 'asset/js/view/main.js', revision: '1' },
     { url: '/manifest.json', revision: '1' },
-    { url: '/icons/icon-96x96.png', revision: '1' },
-    { url: '/icons/icon-192x192.png', revision: '1' },
-    { url: '/icons/icon-512x512.png', revision: '1' },
+    { url: '/asset/icons/icon-96x96.png', revision: '1' },
+    { url: '/asset/icons/icon-192x192.png', revision: '1' },
+    { url: '/asset/icons/icon-512x512.png', revision: '1' },
+    { url: '/asset/icons/favicon-32x32.png', revision: '1' },
+    { url: '/asset/icons/favicon-16x16.png', revision: '1' },
+    { url: '/asset/icons/logo-notfound.png', revision: '1' },
 ], {
   // Ignore all URL parameters.
-  ignoreURLParametersMatching: [/.*/]
+  ignoreUrlParametersMatching: [/.*/]
 });
 
 
@@ -86,7 +90,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  /^https:\/\/api\.football-data\.org\/v2\//,
+  ({url}) => url.origin === 'https://api.football-data.org',
   workbox.strategies.staleWhileRevalidate({
       cacheName: 'api-content',
   plugins:[
@@ -95,14 +99,17 @@ workbox.routing.registerRoute(
   ]
   })
 );
-
-// Menyimpan cache dari CSS Google Fonts
 workbox.routing.registerRoute(
-  /^https:\/\/fonts\.googleapis\.com/,
+  ({url}) => url.origin === 'https://fonts.googleapis.com',
   workbox.strategies.staleWhileRevalidate({
-    cacheName: 'google-fonts-stylesheets',
+      cacheName: 'asset-google',
+  plugins:[
+      new workbox.cacheableResponse.Plugin({statuses:[0,200]}),
+      new workbox.expiration.Plugin({maxAgeSeconds: 60 * 30}),
+  ]
   })
 );
+
 
 self.addEventListener('push', function(event) {
   var body;

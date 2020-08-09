@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var content = document.querySelector("#body-content");
         
         if (page === "beranda") {
-          getStandings  ();
+          getStandings();
         } else if (page === "saved") {
           getSavedTeams();
         }
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       }
     };
-    xhttp.open("GET", "pages/" + page + ".html", true);
+    xhttp.open("GET", "asset/pages/" + page + ".html", true);
     xhttp.send();
   }
 
